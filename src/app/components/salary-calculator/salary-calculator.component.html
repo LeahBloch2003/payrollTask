@@ -1,0 +1,53 @@
+<!-- salary calculation calculator display -->
+<form [formGroup]="salaryForm" (ngSubmit)="calculateSalary()" class="p-fluid p-formgrid p-grid">
+  <div class="p-col-12">
+    <h2 class="text-center">Salary Calculation Calculator</h2>
+  </div>
+
+  <div class="p-col-12" style="height: 20px;"></div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="partTimeJob" class="p-highlight">Part-time job</label>
+    <p-dropdown id="partTimeJob" formControlName="partTimeJob" [options]="partTimeJobOptions" optionLabel="label"
+      [style]="{'width':'15%'}"></p-dropdown>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="professionalLevel" class="p-highlight">Professional level</label>
+    <p-dropdown id="professionalLevel" formControlName="professionalLevel" [options]="professionalLevelOptions"
+      optionLabel="label" [style]="{'width':'15%'}"></p-dropdown>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="managementLevel" class="p-highlight">Management level</label>
+    <p-dropdown id="managementLevel" formControlName="managementLevel" [options]="managementLevelOptions"
+      optionLabel="label" [style]="{'width':'15%'}"></p-dropdown>
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label class="p-highlight">Total years of seniority</label>
+    <br>
+    <input id="yearsOfSeniority" type="number" formControlName="yearsOfSeniority" class="p-inputtext p-component"
+      [style]="{'width':'15%'}" min="0" />
+  </div>
+
+  <div class="p-field p-col-12 p-md-6">
+    <label for="overtimeEligible" class="p-highlight">Is eligible for overtime by law?</label>
+    <p-dropdown id="overtimeEligible" formControlName="overtimeEligible" [options]="overtimeEligibleOptions"
+      optionLabel="label" [style]="{'width':'15%'}"></p-dropdown>
+  </div>
+  <div *ngIf="isOvertimeEligible()" class="p-field p-col-12 p-md-6">
+    <label for="overtimeGroup" class="p-highlight">Choose overtime group</label>
+    <p-dropdown id="overtimeGroup" formControlName="overtimeGroup" [options]="overtimeGroupOptions" optionLabel="label"
+      [style]="{'width':'15%'}"></p-dropdown>
+    <small *ngIf="salaryForm.get('overtimeGroup')?.invalid && salaryForm.get('overtimeGroup')?.touched"
+      class="p-error">Please select an overtime group.</small>
+  </div>
+
+  <div class="p-field p-col-12">
+    <button type="submit" pButton label="Calculate my salary"
+      class="p-button p-component p-button-sm p-button-outlined p-button-blue"
+      [disabled]="!salaryForm.valid || (isOvertimeEligible() && (!salaryForm.get('overtimeGroup')?.value || salaryForm.get('overtimeGroup')?.invalid))"
+      [style]="{'width':'15%', 'margin-top':'10px'}"></button>
+  </div>
+</form>
